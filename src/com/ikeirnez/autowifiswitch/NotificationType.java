@@ -32,7 +32,9 @@ public enum NotificationType {
                 handler = new Handler();
             }
 
-            notificationManager.notify(1, new Notification.Builder(context).setSmallIcon(R.drawable.ic_launcher).setContentTitle("AutoWifiSwitch").setContentText("Auto-joined: " + network).getNotification());
+            String text = "Auto-joined: " + network;
+            notificationManager.notify(1, new Notification.Builder(context)
+                    .setSmallIcon(R.drawable.ic_launcher).setContentTitle("AutoWifiSwitch").setContentText(text).setTicker(text).getNotification());
             handler.postDelayed(new Runnable() { // todo better way to do this?
                 @Override
                 public void run() {
