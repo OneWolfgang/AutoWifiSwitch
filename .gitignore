@@ -30,3 +30,6 @@ proguard/
 # IDEA
 *.iml
 .idea/*
+
+# Images
+thumbs.db
