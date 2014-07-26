@@ -1,0 +1,45 @@
+package com.ikeirnez.autowifiswitch.background;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import com.ikeirnez.autowifiswitch.Main;
+
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by iKeirNez on 26/07/2014.
+ */
+public class ServiceStarter extends BroadcastReceiver {
+
+    private static AlarmManager alarmManager;
+    private static PendingIntent pendingIntent;
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
+            startService(context);
+        }
+    }
+
+    public static void startService(Context context){
+        if (alarmManager == null){
+            alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        }
+
+        if (pendingIntent != null){
+            alarmManager.cancel(pendingIntent);
+        }
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Intent serviceIntent = new Intent(context, WifiScanService.class);
+        long millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString(Main.KEY_UPDATE_INTERVAL, String.valueOf(Main.DEFAULT_UPDATE_INTERVAL))));
+        pendingIntent = PendingIntent.getService(context, 0, serviceIntent, 0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), millis, pendingIntent);
+    }
+}
