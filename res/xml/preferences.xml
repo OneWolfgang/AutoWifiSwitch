@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference android:key="enabled"
+                        android:title="Enabled"
+                        android:summary="Enables or disables automatic wifi joining"
+                        android:defaultValue="true" />
+    <ListPreference android:key="difference_required"
+                    android:title="Required Difference"
+                    android:summary="The difference in signal strengths required for the wifi network to be switched" />
+    <EditTextPreference android:key="update_interval"
+                        android:title="Update Interval"
+                        android:summary="The time (in seconds) which we should check for new networks to connect to"
+                        android:defaultValue="10"
+                        android:inputType="number" />
+    <ListPreference android:key="notification_type"
+                    android:title="Notification Type"
+                    android:summary="The type of notification to receive when this app connects you to the best nearby network" />
+    <CheckBoxPreference android:key="power_saver_disables"
+                        android:title="Power Saver Disables"
+                        android:summary="Waiting on Android L. Disables automatic wifi joining when in power saver mode"
+                        android:defaultValue="false"
+                        android:enabled="false" />
+</PreferenceScreen>

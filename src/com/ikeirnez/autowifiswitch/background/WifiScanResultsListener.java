@@ -8,9 +8,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.util.Log;
-import android.widget.Toast;
-import com.ikeirnez.autowifiswitch.Main;
+import com.ikeirnez.autowifiswitch.NotificationType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +38,7 @@ public class WifiScanResultsListener extends BroadcastReceiver {
             WifiInfo current = wifiManager.getConnectionInfo();
 
             ScanResult best = null;
-            int differenceRequirement = Integer.parseInt(preferences.getString(Main.KEY_DIFFERENCE_REQUIRED, String.valueOf(Main.DEFAULT_DIFFERENCE_REQUIRED))) * 10; // todo vv ugly
+            int differenceRequirement = Integer.parseInt(preferences.getString("differenceRequired", "2")) * 10; // todo vv ugly
 
             for (WifiConfiguration wifiConfiguration : configuredNetworks){ // cache connections we can attempt to connect to
                 allowedAttemptConnect.put(wifiConfiguration.SSID.substring(1, wifiConfiguration.SSID.length() - 1), wifiConfiguration);
@@ -56,10 +54,7 @@ public class WifiScanResultsListener extends BroadcastReceiver {
             // best was found, will continue if not connected or if we aren't attempting to connect to a network we're already connected to and the difference is bigger or equal to the requirements
             if (best != null && (current == null || (!current.getSSID().substring(1, current.getSSID().length() - 1).equals(best.SSID) && WifiManager.compareSignalLevel(best.level, current.getRssi()) >= differenceRequirement))){ // attempt to connect if we have something to connect to, and don't attempt to connect to a network we're already connected to
                 wifiManager.enableNetwork(allowedAttemptConnect.get(best.SSID).networkId, true);
-
-                if (preferences.getBoolean(Main.KEY_TOAST_NOTIFICATION, Main.DEFAULT_TOAST_NOTIFICATION)){
-                    Toast.makeText(context, "AutoWiFiSwitch: Joined " + best.SSID, Toast.LENGTH_SHORT).show();
-                }
+                NotificationType.valueOf(preferences.getString("notification_type", NotificationType.TOAST.name())).doNotification(context, best.SSID);
             }
         }
     }
