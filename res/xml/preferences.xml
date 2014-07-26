@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference android:key="enabled"
+    <SwitchPreference android:key="enabled"
                         android:title="Enabled"
                         android:summary="Enables or disables automatic wifi joining"
                         android:defaultValue="true" />
@@ -16,9 +16,12 @@
     <ListPreference android:key="notification_type"
                     android:title="Notification Type"
                     android:summary="The type of notification to receive when this app connects you to the best nearby network" />
-    <CheckBoxPreference android:key="power_saver_disables"
+    <SwitchPreference android:key="power_saver_disables"
                         android:title="Power Saver Disables"
                         android:summary="Waiting on Android L. Disables automatic wifi joining when in power saver mode"
                         android:defaultValue="false"
                         android:enabled="false" />
+    <Preference android:key="donate_button"
+                android:title="Donate"
+                android:summary="This application is completely free, however donations are always welcomed. It helps me develop updates for this app and also new apps" />
 </PreferenceScreen>
