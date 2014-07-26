@@ -19,7 +19,7 @@ public enum NotificationType {
     }, TOAST("Toast") {
         @Override
         public void doNotification(Context context, String network) {
-            Toast.makeText(context, "Auto-joined: " + network, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "AutoWifiSwitch: Connected to " + network, Toast.LENGTH_SHORT).show();
         }
     }, NOTIFICATION("Quick Notification") {
         @Override
@@ -32,7 +32,7 @@ public enum NotificationType {
                 handler = new Handler();
             }
 
-            String text = "Auto-joined: " + network;
+            String text = "AutoWifiSwitch: Connected to " + network;
             notificationManager.notify(1, new Notification.Builder(context)
                     .setSmallIcon(R.drawable.ic_launcher).setContentTitle("AutoWifiSwitch").setContentText(text).setTicker(text).getNotification());
             handler.postDelayed(new Runnable() { // todo better way to do this?
