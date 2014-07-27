@@ -4,7 +4,7 @@
     <SwitchPreference android:key="enabled"
                       android:title="Enabled"
                       android:summary="Enables or disables automatic wifi joining"
-                      android:defaultValue="false" />
+                      android:defaultValue="true" />
     <ListPreference android:key="difference_required"
                     android:title="Required Difference"
                     android:summary="The difference in signal strengths required for the wifi network to be switched"
