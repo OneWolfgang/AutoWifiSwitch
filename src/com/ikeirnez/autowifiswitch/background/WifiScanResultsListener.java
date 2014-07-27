@@ -19,12 +19,10 @@ import java.util.Map;
  */
 public class WifiScanResultsListener extends BroadcastReceiver {
 
-    private Context context;
     private WifiManager wifiManager;
     private SharedPreferences preferences;
 
-    public WifiScanResultsListener(Context context, WifiManager wifiManager, SharedPreferences preferences){
-        this.context = context;
+    public WifiScanResultsListener(WifiManager wifiManager, SharedPreferences preferences){
         this.wifiManager = wifiManager;
         this.preferences = preferences;
     }
