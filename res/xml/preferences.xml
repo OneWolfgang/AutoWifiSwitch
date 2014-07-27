@@ -23,5 +23,5 @@
                         android:enabled="false" />
     <Preference android:key="donate_button"
                 android:title="Donate"
-                android:summary="This application is completely free, however donations are always welcomed. It helps me develop updates for this app and also new apps" />
+                android:summary="This application is completely free, however donations are always welcomed. It supports future projects and updates to this app." />
 </PreferenceScreen>
