@@ -16,7 +16,7 @@ public enum NotificationType {
     NONE("None") {
         @Override
         public void doNotification(Context context, String network) {}
-    }, TOAST("Toast") {
+    }, TOAST("Toast") { // note, corresponding default in preferences.xml
         @Override
         public void doNotification(Context context, String network) {
             Toast.makeText(context, "AutoWifiSwitch: Connected to " + network, Toast.LENGTH_SHORT).show();

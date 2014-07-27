@@ -2,12 +2,13 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference android:key="enabled"
-                        android:title="Enabled"
-                        android:summary="Enables or disables automatic wifi joining"
-                        android:defaultValue="true" />
+                      android:title="Enabled"
+                      android:summary="Enables or disables automatic wifi joining"
+                      android:defaultValue="false" />
     <ListPreference android:key="difference_required"
                     android:title="Required Difference"
-                    android:summary="The difference in signal strengths required for the wifi network to be switched" />
+                    android:summary="The difference in signal strengths required for the wifi network to be switched"
+                    android:defaultValue="2" /> <!-- todo test for this -->
     <EditTextPreference android:key="update_interval"
                         android:title="Update Interval"
                         android:summary="The time (in seconds) which we should check for new networks to connect to"
@@ -15,12 +16,13 @@
                         android:inputType="number" />
     <ListPreference android:key="notification_type"
                     android:title="Notification Type"
-                    android:summary="The type of notification to receive when this app connects you to the best nearby network" />
+                    android:summary="The type of notification to receive when this app connects you to the best nearby network"
+                    android:defaultValue="TOAST" /> <!-- todo test for this -->
     <SwitchPreference android:key="power_saver_disables"
-                        android:title="Power Saver Disables"
-                        android:summary="Waiting on Android L. Disables automatic wifi joining when in power saver mode"
-                        android:defaultValue="false"
-                        android:enabled="false" />
+                      android:title="Power Saver Disables"
+                      android:summary="Waiting on Android L. Disables automatic wifi joining when in power saver mode"
+                      android:defaultValue="false"
+                      android:enabled="false" />
     <Preference android:key="donate_button"
                 android:title="Donate"
                 android:summary="This application is completely free, however donations are always welcomed. It supports future projects and updates to this app." />

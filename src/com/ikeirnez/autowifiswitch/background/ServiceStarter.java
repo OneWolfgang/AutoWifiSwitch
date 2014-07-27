@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.ikeirnez.autowifiswitch.R;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -36,10 +35,10 @@ public class ServiceStarter extends BroadcastReceiver {
             alarmManager.cancel(pendingIntent);
         }
 
-        PreferenceManager.setDefaultValues(context, R.xml.preferences, false); // work around for preferences potentially not being loaded
+        //PreferenceManager.setDefaultValues(context, R.xml.preferences, false); // work around for preferences potentially not being loaded
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        if (preferences.getBoolean("enabled", true)){
+        if (preferences.getBoolean("enabled", false)){
             Intent serviceIntent = new Intent(context, WifiScanService.class);
             long millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval", "10")));
             pendingIntent = PendingIntent.getService(context, 0, serviceIntent, 0);
