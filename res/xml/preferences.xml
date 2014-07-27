@@ -19,7 +19,7 @@
                     android:summary="The type of notification to receive when this app connects you to the best nearby network"
                     android:defaultValue="TOAST" /> <!-- todo test for this -->
     <SwitchPreference android:key="power_saver_disables"
-                      android:title="Power Saver Disables"
+                      android:title="Power Saver"
                       android:summary="Waiting on Android L. Disables automatic wifi joining when in power saver mode"
                       android:defaultValue="false"
                       android:enabled="false" />
