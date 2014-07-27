@@ -34,7 +34,7 @@ public enum NotificationType {
 
             String text = "AutoWifiSwitch: Connected to " + network;
             notificationManager.notify(1, new Notification.Builder(context)
-                    .setSmallIcon(R.drawable.ic_launcher).setContentTitle("AutoWifiSwitch").setContentText(text).setTicker(text).build());
+                    .setSmallIcon(R.drawable.ic_launcher).setContentTitle("AutoWifiSwitch").setContentText(text).setTicker(text).getNotification());
             handler.postDelayed(new Runnable() { // todo better way to do this?
                 @Override
                 public void run() {

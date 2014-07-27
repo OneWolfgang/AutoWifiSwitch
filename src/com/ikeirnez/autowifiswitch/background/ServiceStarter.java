@@ -41,7 +41,7 @@ public class ServiceStarter extends BroadcastReceiver {
             Intent serviceIntent = new Intent(context, WifiScanService.class);
             long millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval", "10")));
             pendingIntent = PendingIntent.getService(context, 0, serviceIntent, 0);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(), millis, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC, Calendar.getInstance().getTimeInMillis(), millis, pendingIntent);
         }
     }
 }
