@@ -23,7 +23,7 @@ Please note: This app will only attempt to connect to networks which you have co
 
 ## Credits
 
-* [AndroidAssetStudio](http://romannurik.github.io/AndroidAssetStudio/icons-launcher.html) for the icons, I'm very bad at graphics myself.
+* [AndroidAssetStudio](http://romannurik.github.io/AndroidAssetStudio/index.html) for the icons, I'm very bad at graphics myself.
 * **Gravity** for doing some testing.
 
 ## Donations
