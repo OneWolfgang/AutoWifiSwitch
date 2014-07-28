@@ -15,6 +15,11 @@ Please note: This app will only attempt to connect to networks which you have co
 * Power-saving mode disables the app, waiting on Android L for APIs, but may hook into vendor specific APIs in the meantime.
 * Sound notification when changing network?
 * Debugging interface to see network signal strengths and how they compare to other nearby networks, useful for figuring out a good signal difference requirement.
+* Better tablet experience.
+
+# Todo
+
+* Fix battery issues.
 
 ## Credits
 
