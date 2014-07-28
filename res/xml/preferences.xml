@@ -3,7 +3,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference android:key="enabled"
                       android:title="Enabled"
-                      android:summary="Enables or disables automatic wifi joining"
+                      android:summary="Enables or disables automatic wifi scanning &amp; joining"
                       android:defaultValue="true" />
     <ListPreference android:key="difference_required"
                     android:title="Required Difference"
