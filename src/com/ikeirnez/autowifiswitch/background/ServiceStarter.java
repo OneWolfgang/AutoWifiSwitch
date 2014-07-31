@@ -5,7 +5,6 @@ import android.content.*;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -78,7 +77,7 @@ public class ServiceStarter extends BroadcastReceiver {
                 }
             }
 
-            alarmManager.setRepeating(AlarmManager.RTC, Calendar.getInstance().getTimeInMillis(), millis, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), millis, pendingIntent);
         }
     }
 }
