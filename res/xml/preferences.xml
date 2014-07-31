@@ -10,9 +10,14 @@
                     android:summary="The difference in signal strengths required for the wifi network to be switched"
                     android:defaultValue="2" /> <!-- todo test for this -->
     <EditTextPreference android:key="update_interval"
-                        android:title="Update Interval"
-                        android:summary="The time (in seconds) which we should check for new networks to connect to"
+                        android:title="Scan Interval (display on)"
+                        android:summary="The time (in seconds) which we should scan for new networks to connect to when the display is on"
                         android:defaultValue="10"
+                        android:inputType="number" />
+    <EditTextPreference android:key="update_interval_display_off"
+                        android:title="Scan Interval (display off)"
+                        android:summary="The time (in seconds) which we should scan for new networks to connect to when the display is off (0 disables scanning whilst display is off)"
+                        android:defaultValue="30"
                         android:inputType="number" />
     <ListPreference android:key="notification_type"
                     android:title="Notification Type"
