@@ -1,10 +1,11 @@
-package com.ikeirnez.autowifiswitch;
+package com.ikeirnez.autowifiswitch.constants;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
+import com.ikeirnez.autowifiswitch.R;
 
 import java.util.concurrent.TimeUnit;
 

@@ -23,12 +23,12 @@
                     android:title="Notification Type"
                     android:summary="The type of notification to receive when this app connects you to the best nearby network"
                     android:defaultValue="TOAST" /> <!-- todo test for this -->
-    <SwitchPreference android:key="power_saver_disables"
+    <CheckBoxPreference android:key="power_saver_disables"
                       android:title="Power Saver"
-                      android:summary="Waiting on Android L. Disables automatic wifi joining when in power saver mode"
-                      android:defaultValue="false"
-                      android:enabled="false" />
+                      android:summary="Disables automatic wifi scanning whilst in power saver mode"
+                      android:defaultValue="true"
+                      android:enabled="true" />
     <Preference android:key="donate_button"
                 android:title="Donate"
-                android:summary="This application is completely free, however donations are always welcomed. It supports future projects and updates to this app." />
+                android:summary="This application is completely free, however donations are always welcomed. It supports future projects and updates to this app" />
 </PreferenceScreen>

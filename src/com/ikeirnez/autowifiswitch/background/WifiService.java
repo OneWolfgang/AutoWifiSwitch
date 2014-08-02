@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import com.ikeirnez.autowifiswitch.listeners.ScreenWifiListener;
+import com.ikeirnez.autowifiswitch.listeners.WifiScanResultsListener;
 
 /**
  * Created by iKeirNez on 26/07/2014.
@@ -18,7 +20,7 @@ public class WifiService extends Service {
     private WifiManager wifiManager;
 
     private WifiScanResultsListener wifiScanResultsListener;
-    private ComponentStateChangeListener componentStateChangeListener;
+    private ScreenWifiListener screenWifiListener;
 
     @Override
     public void onCreate() {
@@ -31,13 +33,14 @@ public class WifiService extends Service {
         IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(componentStateChangeListener = new ComponentStateChangeListener(), intentFilter);
+        registerReceiver(screenWifiListener = new ScreenWifiListener(), intentFilter);
     }
 
     @Override
     public void onDestroy() {
         unregisterReceiver(wifiScanResultsListener);
-        unregisterReceiver(componentStateChangeListener);
+        unregisterReceiver(screenWifiListener);
+
         super.onDestroy();
     }
 

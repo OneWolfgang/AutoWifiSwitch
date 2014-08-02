@@ -1,4 +1,4 @@
-package com.ikeirnez.autowifiswitch.background;
+package com.ikeirnez.autowifiswitch.listeners;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import com.ikeirnez.autowifiswitch.NotificationType;
+import com.ikeirnez.autowifiswitch.constants.NotificationType;
 
 import java.util.HashMap;
 import java.util.List;

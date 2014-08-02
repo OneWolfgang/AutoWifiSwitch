@@ -5,14 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import com.ikeirnez.autowifiswitch.NotificationType;
+import android.preference.*;
+import com.ikeirnez.autowifiswitch.constants.NotificationType;
 import com.ikeirnez.autowifiswitch.R;
-import com.ikeirnez.autowifiswitch.background.ServiceStarter;
+import com.ikeirnez.autowifiswitch.background.ServiceManager;
+import com.ikeirnez.autowifiswitch.constants.SoftwareType;
 
 /**
  * Created by iKeirNez on 27/07/2014.
@@ -38,6 +37,8 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
         }
     }
 
+    private SharedPreferences preferences;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +59,32 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
         Preference donateButton = findPreference("donate_button");
         donateButton.setOnPreferenceClickListener(this);
 
-        PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
+        CheckBoxPreference powerSaverDisables = (CheckBoxPreference) findPreference("power_saver_disables");
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
+            powerSaverDisables.setChecked(false);
+            powerSaverDisables.setEnabled(false);
+            powerSaverDisables.setSummary("Requires Android Jelly Bean (v4.1) or higher");
+        } else if (SoftwareType.getRunningSoftwareType(getActivity()) == null){
+            powerSaverDisables.setChecked(false);
+            powerSaverDisables.setEnabled(false);
+            powerSaverDisables.setSummary("Power Saver support not added for your device, we currently only support HTC and Samsung devices.");
+        }
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        preferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("enabled") || key.equals("difference_required") || key.equals("update_interval")){
-            ServiceStarter.rescheduleService(getActivity()); // restart service
+            ServiceManager.startService(getActivity()); // restart service
+        } else if (key.equals("power_saver_disables")){
+            if (preferences.getBoolean("power_saver_disables", false)){
+                ServiceManager.enablePowerSaverMonitor(getActivity());
+            } else {
+                ServiceManager.disablePowerSaverMonitor(getActivity());
+            }
         }
     }
 

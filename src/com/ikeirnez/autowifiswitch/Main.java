@@ -4,7 +4,7 @@ import android.app.*;
 import android.content.*;
 import android.os.Bundle;
 import android.preference.*;
-import com.ikeirnez.autowifiswitch.background.ServiceStarter;
+import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.background.WifiService;
 import com.ikeirnez.autowifiswitch.preferences.ConfigFragment;
 
@@ -16,7 +16,7 @@ public class Main extends PreferenceActivity {
         setContentView(R.layout.main);
 
         if (!isServiceRunning(WifiService.class)){
-            ServiceStarter.rescheduleService(this);
+            ServiceManager.startService(this);
         }
 
         // the below code opens the option fragment

@@ -4,13 +4,16 @@ import android.app.*;
 import android.content.*;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import com.ikeirnez.autowifiswitch.constants.SoftwareType;
+import com.ikeirnez.autowifiswitch.listeners.PowerSaverListener;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by iKeirNez on 26/07/2014.
  */
-public class ServiceStarter extends BroadcastReceiver {
+public class ServiceManager extends BroadcastReceiver {
 
     private static AlarmManager alarmManager;
     private static PowerManager powerManager;
@@ -18,7 +21,7 @@ public class ServiceStarter extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
-            rescheduleService(context);
+            startService(context);
         }
     }
 
@@ -32,12 +35,22 @@ public class ServiceStarter extends BroadcastReceiver {
         }
     }
 
-    public static void rescheduleService(Context context){
+    public static void startService(Context context){
+        SoftwareType softwareType = SoftwareType.getRunningSoftwareType(context);
+
+        if (softwareType != null && PreferenceManager.getDefaultSharedPreferences(context).getBoolean("power_saver_disables", false)){
+            ServiceManager.enablePowerSaverMonitor(context);
+
+            if (softwareType.getPowerSaverStatus(context)){
+                return; // prevent service starting if power saver on
+            }
+        }
+
         initManagers(context);
-        rescheduleService(context, powerManager.isScreenOn());
+        startService(context, powerManager.isScreenOn());
     }
 
-    public static void rescheduleService(Context context, boolean screenStatus){
+    public static void startService(Context context, boolean screenStatus){
         initManagers(context);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -69,5 +82,24 @@ public class ServiceStarter extends BroadcastReceiver {
     public static void cancelService(Context context, PendingIntent pendingIntent){
         initManagers(context);
         alarmManager.cancel(pendingIntent);
+    }
+
+    private static PowerSaverListener powerSaverListener;
+
+    public static void enablePowerSaverMonitor(Context context){
+        context.getContentResolver().registerContentObserver(Settings.System.CONTENT_URI, true, powerSaverListener = new PowerSaverListener(context));
+
+        if (SoftwareType.getRunningSoftwareType(context).getPowerSaverStatus(context)){
+            cancelService(context);
+        }
+    }
+
+    public static void disablePowerSaverMonitor(Context context){
+        if (powerSaverListener != null){
+            context.getContentResolver().unregisterContentObserver(powerSaverListener);
+            powerSaverListener = null;
+        }
+
+        startService(context);
     }
 }
