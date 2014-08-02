@@ -64,7 +64,7 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("enabled") || key.equals("difference_required") || key.equals("update_interval")){
-            ServiceStarter.startService(getActivity()); // restart service
+            ServiceStarter.rescheduleService(getActivity()); // restart service
         }
     }
 

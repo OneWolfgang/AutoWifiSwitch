@@ -16,7 +16,7 @@ public class Main extends PreferenceActivity {
         setContentView(R.layout.main);
 
         if (!isServiceRunning(WifiScanService.class)){
-            ServiceStarter.startService(this);
+            ServiceStarter.rescheduleService(this);
         }
 
         // the below code opens the option fragment

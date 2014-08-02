@@ -15,40 +15,14 @@ public class ServiceStarter extends BroadcastReceiver {
     private static AlarmManager alarmManager;
     private static PowerManager powerManager;
 
-    private static ServiceStarter instance;
-    private static boolean registered = false;
-
-    {
-        instance = this;
-    }
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        switch (intent.getAction()){
-            default: break;
-            case Intent.ACTION_BOOT_COMPLETED:
-            case Intent.ACTION_SCREEN_ON:
-            case Intent.ACTION_SCREEN_OFF:
-                startService(context);
-                break;
+        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
+            rescheduleService(context);
         }
     }
 
-    public static void startService(Context context){
-        if (!registered){
-            // (re-)register but this time for screen on/off, no need for BOOT_COMPLETED
-            // for some reason this has to be set pragmatically and can't be done in the manifest
-            if (instance != null){
-                context.unregisterReceiver(instance);
-            }
-
-            instance = new ServiceStarter();
-            IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-            intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-            context.registerReceiver(instance, intentFilter);
-            registered = true;
-        }
-
+    public static void initManagers(Context context){
         if (alarmManager == null){
             alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         }
@@ -56,8 +30,15 @@ public class ServiceStarter extends BroadcastReceiver {
         if (powerManager == null){
             powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         }
+    }
 
-        //PreferenceManager.setDefaultValues(context, R.xml.preferences, false); // work around for preferences potentially not being loaded
+    public static void rescheduleService(Context context){
+        initManagers(context);
+        rescheduleService(context, powerManager.isScreenOn());
+    }
+
+    public static void rescheduleService(Context context, boolean screenStatus){
+        initManagers(context);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         if (preferences.getBoolean("enabled", true)){
@@ -67,7 +48,7 @@ public class ServiceStarter extends BroadcastReceiver {
             alarmManager.cancel(pendingIntent); // cancel old timer
 
             long millis;
-            if (powerManager.isScreenOn()){
+            if (screenStatus){
                 millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval", "10")));
             } else {
                 millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval_display_off", "30")));
@@ -79,5 +60,14 @@ public class ServiceStarter extends BroadcastReceiver {
 
             alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), millis, pendingIntent);
         }
+    }
+
+    public static void cancelService(Context context){
+        cancelService(context, PendingIntent.getService(context, 0, new Intent(context, WifiScanService.class), PendingIntent.FLAG_CANCEL_CURRENT));
+    }
+
+    public static void cancelService(Context context, PendingIntent pendingIntent){
+        initManagers(context);
+        alarmManager.cancel(pendingIntent);
     }
 }
