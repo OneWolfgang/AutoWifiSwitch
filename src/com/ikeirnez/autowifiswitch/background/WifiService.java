@@ -7,50 +7,43 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
 
 /**
  * Created by iKeirNez on 26/07/2014.
  */
-public class WifiScanService extends Service {
+public class WifiService extends Service {
 
     private SharedPreferences preferences;
     private WifiManager wifiManager;
 
     private WifiScanResultsListener wifiScanResultsListener;
-    private WifiStateChangeListener wifiStateChangeListener;
-
-    private PowerManager powerManager;
-    private boolean lastScreenOnState = true;
+    private ComponentStateChangeListener componentStateChangeListener;
 
     @Override
     public void onCreate() {
         super.onCreate();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         registerReceiver(wifiScanResultsListener = new WifiScanResultsListener(wifiManager, preferences), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        registerReceiver(wifiStateChangeListener = new WifiStateChangeListener(), new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
+
+        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(componentStateChangeListener = new ComponentStateChangeListener(), intentFilter);
     }
 
     @Override
     public void onDestroy() {
         unregisterReceiver(wifiScanResultsListener);
+        unregisterReceiver(componentStateChangeListener);
         super.onDestroy();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         wifiManager.startScan();
-
-        boolean screenStatus = powerManager.isScreenOn();
-        if (screenStatus != lastScreenOnState){
-            ServiceStarter.rescheduleService(getBaseContext(), screenStatus);
-            lastScreenOnState = screenStatus;
-        }
-
         return Service.START_STICKY;
     }
 

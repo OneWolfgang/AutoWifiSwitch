@@ -42,7 +42,7 @@ public class ServiceStarter extends BroadcastReceiver {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         if (preferences.getBoolean("enabled", true)){
-            Intent serviceIntent = new Intent(context, WifiScanService.class);
+            Intent serviceIntent = new Intent(context, WifiService.class);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             alarmManager.cancel(pendingIntent); // cancel old timer
@@ -63,7 +63,7 @@ public class ServiceStarter extends BroadcastReceiver {
     }
 
     public static void cancelService(Context context){
-        cancelService(context, PendingIntent.getService(context, 0, new Intent(context, WifiScanService.class), PendingIntent.FLAG_CANCEL_CURRENT));
+        cancelService(context, PendingIntent.getService(context, 0, new Intent(context, WifiService.class), PendingIntent.FLAG_CANCEL_CURRENT));
     }
 
     public static void cancelService(Context context, PendingIntent pendingIntent){

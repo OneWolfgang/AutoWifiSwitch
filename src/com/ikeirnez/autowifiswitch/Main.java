@@ -5,7 +5,7 @@ import android.content.*;
 import android.os.Bundle;
 import android.preference.*;
 import com.ikeirnez.autowifiswitch.background.ServiceStarter;
-import com.ikeirnez.autowifiswitch.background.WifiScanService;
+import com.ikeirnez.autowifiswitch.background.WifiService;
 import com.ikeirnez.autowifiswitch.preferences.ConfigFragment;
 
 public class Main extends PreferenceActivity {
@@ -15,7 +15,7 @@ public class Main extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        if (!isServiceRunning(WifiScanService.class)){
+        if (!isServiceRunning(WifiService.class)){
             ServiceStarter.rescheduleService(this);
         }
 
