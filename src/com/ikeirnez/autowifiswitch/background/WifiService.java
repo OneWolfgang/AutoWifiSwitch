@@ -19,6 +19,8 @@ public class WifiService extends Service {
     private SharedPreferences preferences;
     private WifiManager wifiManager;
 
+    public boolean switchingNetwork = false;
+
     private WifiScanResultsListener wifiScanResultsListener;
     private ScreenWifiListener screenWifiListener;
 
@@ -28,12 +30,12 @@ public class WifiService extends Service {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
-        registerReceiver(wifiScanResultsListener = new WifiScanResultsListener(wifiManager, preferences), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        registerReceiver(wifiScanResultsListener = new WifiScanResultsListener(this, wifiManager, preferences), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
-        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        IntentFilter intentFilter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(screenWifiListener = new ScreenWifiListener(), intentFilter);
+        registerReceiver(screenWifiListener = new ScreenWifiListener(this), intentFilter);
     }
 
     @Override

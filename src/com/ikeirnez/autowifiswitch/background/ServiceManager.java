@@ -18,6 +18,8 @@ public class ServiceManager extends BroadcastReceiver {
     private static AlarmManager alarmManager;
     private static PowerManager powerManager;
 
+    private static boolean running = false;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)){
@@ -32,6 +34,16 @@ public class ServiceManager extends BroadcastReceiver {
 
         if (powerManager == null){
             powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        }
+    }
+
+    public static boolean isRunning() {
+        return running;
+    }
+
+    public static void startIfNotActive(Context context){
+        if (!running){
+            startService(context);
         }
     }
 
@@ -58,7 +70,7 @@ public class ServiceManager extends BroadcastReceiver {
             Intent serviceIntent = new Intent(context, WifiService.class);
             PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-            alarmManager.cancel(pendingIntent); // cancel old timer
+            cancelService(context, pendingIntent); // cancel old timer
 
             long millis;
             if (screenStatus){
@@ -71,7 +83,14 @@ public class ServiceManager extends BroadcastReceiver {
                 }
             }
 
-            alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), millis, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis() + millis, millis, pendingIntent);
+            running = true;
+        }
+    }
+
+    public static void cancelIfRunning(Context context){
+        if (running){
+            cancelService(context);
         }
     }
 
@@ -82,6 +101,7 @@ public class ServiceManager extends BroadcastReceiver {
     public static void cancelService(Context context, PendingIntent pendingIntent){
         initManagers(context);
         alarmManager.cancel(pendingIntent);
+        running = false;
     }
 
     private static PowerSaverListener powerSaverListener;

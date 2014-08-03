@@ -8,6 +8,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import com.ikeirnez.autowifiswitch.background.WifiService;
 import com.ikeirnez.autowifiswitch.constants.NotificationType;
 
 import java.util.HashMap;
@@ -19,10 +20,12 @@ import java.util.Map;
  */
 public class WifiScanResultsListener extends BroadcastReceiver {
 
+    private WifiService wifiService;
     private WifiManager wifiManager;
     private SharedPreferences preferences;
 
-    public WifiScanResultsListener(WifiManager wifiManager, SharedPreferences preferences){
+    public WifiScanResultsListener(WifiService wifiService, WifiManager wifiManager, SharedPreferences preferences){
+        this.wifiService = wifiService;
         this.wifiManager = wifiManager;
         this.preferences = preferences;
     }
@@ -51,6 +54,7 @@ public class WifiScanResultsListener extends BroadcastReceiver {
 
             // best was found, will continue if not connected or if we aren't attempting to connect to a network we're already connected to and the difference is bigger or equal to the requirements
             if (best != null && (current == null || (!current.getSSID().substring(1, current.getSSID().length() - 1).equals(best.SSID) && WifiManager.compareSignalLevel(best.level, current.getRssi()) >= differenceRequirement))){ // attempt to connect if we have something to connect to, and don't attempt to connect to a network we're already connected to
+                wifiService.switchingNetwork = true;
                 wifiManager.enableNetwork(allowedAttemptConnect.get(best.SSID).networkId, true);
                 NotificationType.valueOf(preferences.getString("notification_type", NotificationType.TOAST.name())).doNotification(context, best.SSID);
             }
