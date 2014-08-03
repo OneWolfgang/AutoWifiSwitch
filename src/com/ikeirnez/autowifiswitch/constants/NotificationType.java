@@ -14,15 +14,15 @@ import java.util.concurrent.TimeUnit;
  */
 public enum NotificationType {
 
-    NONE("None") {
+    NONE(R.string.notification_type_none) {
         @Override
         public void doNotification(Context context, String network) {}
-    }, TOAST("Toast") { // note, corresponding default in preferences.xml
+    }, TOAST(R.string.notification_type_toast) { // note, corresponding default in preferences.xml
         @Override
         public void doNotification(Context context, String network) {
-            Toast.makeText(context, "AutoWifiSwitch: Connected to " + network, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.connected_notification, network), Toast.LENGTH_SHORT).show();
         }
-    }, NOTIFICATION("Quick Notification") {
+    }, NOTIFICATION(R.string.notification_type_quick_notification) {
         @Override
         public void doNotification(Context context, String network) {
             if (notificationManager == null){
@@ -33,9 +33,9 @@ public enum NotificationType {
                 handler = new Handler();
             }
 
-            String text = "AutoWifiSwitch: Connected to " + network;
+            String text = context.getString(R.string.connected_notification, network);
             notificationManager.notify(1, new Notification.Builder(context)
-                    .setSmallIcon(R.drawable.notification_icon).setContentTitle("AutoWifiSwitch").setContentText(text).setTicker(text).getNotification());
+                    .setSmallIcon(R.drawable.notification_icon).setContentTitle(context.getString(R.string.app_name)).setContentText(text).setTicker(text).getNotification());
             handler.postDelayed(new Runnable() { // todo better way to do this?
                 @Override
                 public void run() {
@@ -48,13 +48,18 @@ public enum NotificationType {
     private static NotificationManager notificationManager; // used for creating quick notifications
     private static Handler handler; // used to remove notifications quickly
 
-    private final String friendlyName;
+    private final int friendlyNameResId;
+    private String friendlyName;
 
-    private NotificationType(String friendlyName){
-        this.friendlyName = friendlyName;
+    private NotificationType(int friendlyNameResId){
+        this.friendlyNameResId = friendlyNameResId;
     }
 
-    public String getFriendlyName() {
+    public String getFriendlyName(Context context) {
+        if (friendlyName == null){
+            friendlyName = context.getString(friendlyNameResId);
+        }
+
         return friendlyName;
     }
 

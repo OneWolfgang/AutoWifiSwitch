@@ -18,30 +18,26 @@ import com.ikeirnez.autowifiswitch.constants.SoftwareType;
  */
 public class ConfigFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
-    private static final String DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BJQTQKAPZT6VU";
-
-    // cached preferences stuff
-    private static final String[] DIFFERENCE_ENTRIES = new String[10];
-    private static final int NOTIFICATION_TYPE_AMOUNT = NotificationType.values().length;
-    private static final String[] NOTIFICATION_ENTRIES = new String[NOTIFICATION_TYPE_AMOUNT], NOTIFICATION_ENTRY_VALUES = new String[NOTIFICATION_TYPE_AMOUNT];
-
-    static {
-        for (int i = 0; i < 10; i++){
-            DIFFERENCE_ENTRIES[i] = String.valueOf(i);
-        }
-
-        for (int i = 0; i < NOTIFICATION_TYPE_AMOUNT; i++){
-            NotificationType notType = NotificationType.values()[i];
-            NOTIFICATION_ENTRIES[i] = notType.getFriendlyName();
-            NOTIFICATION_ENTRY_VALUES[i] = notType.name();
-        }
-    }
+    // preferences stuff
+    private final String[] DIFFERENCE_ENTRIES = new String[10];
+    private final int NOTIFICATION_TYPE_AMOUNT = NotificationType.values().length;
+    private final String[] NOTIFICATION_ENTRIES = new String[NOTIFICATION_TYPE_AMOUNT], NOTIFICATION_ENTRY_VALUES = new String[NOTIFICATION_TYPE_AMOUNT];
 
     private SharedPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        for (int i = 0; i < 10; i++){
+            DIFFERENCE_ENTRIES[i] = String.valueOf(i);
+        }
+
+        for (int i = 0; i < NOTIFICATION_TYPE_AMOUNT; i++){
+            NotificationType notType = NotificationType.values()[i];
+            NOTIFICATION_ENTRIES[i] = notType.getFriendlyName(getActivity());
+            NOTIFICATION_ENTRY_VALUES[i] = notType.name();
+        }
 
         addPreferencesFromResource(R.xml.preferences);
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
@@ -64,11 +60,11 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
             powerSaverDisables.setChecked(false);
             powerSaverDisables.setEnabled(false);
-            powerSaverDisables.setSummary("Requires Android Jelly Bean (v4.1) or higher");
+            powerSaverDisables.setSummary(R.string.power_saver_android_version);
         } else if (SoftwareType.getRunningSoftwareType(getActivity()) == null){
             powerSaverDisables.setChecked(false);
             powerSaverDisables.setEnabled(false);
-            powerSaverDisables.setSummary("Power Saver support not added for your device, we currently only support HTC and Samsung devices.");
+            powerSaverDisables.setSummary(R.string.power_saver_not_supported);
         }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -92,13 +88,13 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals("donate_button")){
             new AlertDialog.Builder(getActivity())
-                    .setTitle("Thanks!")
-                    .setMessage("Thanks for considering to make a donation, all donations are GREATLY appreciated and go a long way. Donations will help support the development of this app and new apps to come. :)")
-                    .setCancelable(true).setNegativeButton("I don't want to donate", null)
-                    .setPositiveButton("Continue to PayPal", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.donate_popup_header)
+                    .setMessage(R.string.donate_popup_text)
+                    .setCancelable(true).setNegativeButton(R.string.donate_popup_negative, null)
+                    .setPositiveButton(R.string.donate_popup_positive, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(DONATE_URL)));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_popup_url))));
                         }
                     }).create().show();
         }

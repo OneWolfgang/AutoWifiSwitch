@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".background.WifiService" android:label="@string/service_name" />
+        <service android:name=".background.WifiService" android:label="AutoWifiSwitch-WifiScanService" />
 
         <receiver android:name=".background.ServiceManager"
                   android:enabled="true"

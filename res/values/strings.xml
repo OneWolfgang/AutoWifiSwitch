@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">AutoWifiSwitch</string>
-    <string name="service_name">AWS-WifiScan</string>
+    <string name="connected_notification">AutoWifiSwitch: Connected to %1$s</string>
+
+    <!-- Preferences Screen -->
+    <string name="enabled">Enabled</string>
+    <string name="enabled_summary">Enable or disable automatic wifi scanning and joining</string>
+    <string name="required_difference">Required Difference</string>
+    <string name="required_difference_summary">The difference in signal strengths required for the wifi network to be switched</string>
+    <string name="update_interval_display_on">Scan Interval (display on)</string>
+    <string name="update_interval_display_on_summary">The time (in seconds) which we should scan for new networks to connect to when the display is on</string>
+    <string name="update_interval_display_off">Scan Interval (display off)</string>
+    <string name="update_interval_display_off_summary">The time (in seconds) which we should scan for new networks to connect to when the display is off (0 disables scanning whilst display is off)</string>
+    <string name="notification_type">Notification Type</string>
+    <string name="notification_type_summary">The type of notification to receive when this app connects you to the best nearby network</string>
+    <string name="notification_type_none">None</string>
+    <string name="notification_type_toast">Toast</string>
+    <string name="notification_type_quick_notification">Quick Notification</string>
+    <string name="power_saver">Power Saver</string>
+    <string name="power_saver_description">Disables the wifi scanning service whilst in power saver mode</string>
+    <string name="power_saver_android_version">Requires Android Jelly Bean (v4.1) or higher</string>
+    <string name="power_saver_not_supported">Power Saver support not added for your device, we currently only support HTC and Samsung devices.</string>
+    <string name="donate">Donate</string>
+    <string name="donate_summary">This application is completely free, however donations are always welcomed. It supports future projects and updates to this app</string>
+    <string name="donate_popup_header">Thanks!</string>
+    <string name="donate_popup_text">Thanks for considering to make a donation, all donations are GREATLY appreciated and go a long way. Donations will help support the development of this app and new apps to come. :)</string>
+    <string name="donate_popup_negative">I don\'t want to donate</string>
+    <string name="donate_popup_positive">Continue to PayPal</string>
+    <string name="donate_popup_url"><xliff:g id="paypal_url">https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=BJQTQKAPZT6VU</xliff:g></string>
 </resources>
