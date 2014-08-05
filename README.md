@@ -8,6 +8,7 @@ Please note: This app will only attempt to connect to networks which you have co
 
 * **ACCESS_WIFI_STATE** - Used for determining if wifi is enabled, so we don't attempt to scan whilst its off.
 * **CHANGE_WIFI_STATE** - Required for starting a scan of nearby networks.
+* **ACCESS_NETWORK_STATE** - To see if you are actually connected to a wifi network, if not then we won't scan for a better wifi
 * **RECEIVE_BOOT_COMPLETED** - Used for starting up the application's wifi scanning service when your device is powered up.
 * **QUICKBOOT_POWERON** - The same as above, only for HTC devices using quick boot
 

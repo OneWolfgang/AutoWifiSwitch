@@ -54,7 +54,6 @@ public class WifiScanResultsListener extends BroadcastReceiver {
 
             // best was found, will continue if not connected or if we aren't attempting to connect to a network we're already connected to and the difference is bigger or equal to the requirements
             if (best != null && (current == null || (!current.getSSID().substring(1, current.getSSID().length() - 1).equals(best.SSID) && WifiManager.compareSignalLevel(best.level, current.getRssi()) >= differenceRequirement))){ // attempt to connect if we have something to connect to, and don't attempt to connect to a network we're already connected to
-                wifiService.switchingNetwork = true;
                 wifiManager.enableNetwork(allowedAttemptConnect.get(best.SSID).networkId, true);
                 NotificationType.valueOf(preferences.getString("notification_type", NotificationType.TOAST.name())).doNotification(context, best.SSID);
             }
