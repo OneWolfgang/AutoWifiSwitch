@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
 import com.ikeirnez.autowifiswitch.background.ServiceManager;
-import com.ikeirnez.autowifiswitch.constants.SoftwareType;
+import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 
 /**
  * Created by iKeirNez on 02/08/2014.

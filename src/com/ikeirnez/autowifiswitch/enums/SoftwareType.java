@@ -1,4 +1,4 @@
-package com.ikeirnez.autowifiswitch.constants;
+package com.ikeirnez.autowifiswitch.enums;
 
 import android.content.Context;
 import android.content.Intent;

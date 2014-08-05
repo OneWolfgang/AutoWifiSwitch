@@ -8,10 +8,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
-import com.ikeirnez.autowifiswitch.constants.NotificationType;
+import com.ikeirnez.autowifiswitch.enums.NotificationType;
 import com.ikeirnez.autowifiswitch.R;
 import com.ikeirnez.autowifiswitch.background.ServiceManager;
-import com.ikeirnez.autowifiswitch.constants.SoftwareType;
+import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 
 /**
  * Created by iKeirNez on 27/07/2014.

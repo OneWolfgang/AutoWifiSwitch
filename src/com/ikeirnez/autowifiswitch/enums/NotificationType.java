@@ -1,4 +1,4 @@
-package com.ikeirnez.autowifiswitch.constants;
+package com.ikeirnez.autowifiswitch.enums;
 
 import android.app.Notification;
 import android.app.NotificationManager;

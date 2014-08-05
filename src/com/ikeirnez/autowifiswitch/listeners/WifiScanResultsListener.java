@@ -9,7 +9,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import com.ikeirnez.autowifiswitch.background.WifiService;
-import com.ikeirnez.autowifiswitch.constants.NotificationType;
+import com.ikeirnez.autowifiswitch.enums.NotificationType;
 
 import java.util.HashMap;
 import java.util.List;

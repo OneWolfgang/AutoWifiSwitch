@@ -5,7 +5,7 @@ import android.content.*;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import com.ikeirnez.autowifiswitch.constants.SoftwareType;
+import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 import com.ikeirnez.autowifiswitch.listeners.PowerSaverListener;
 
 import java.util.concurrent.TimeUnit;
