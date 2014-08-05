@@ -54,6 +54,7 @@ public class ServiceManager extends BroadcastReceiver {
             ServiceManager.enablePowerSaverMonitor(context);
 
             if (softwareType.getPowerSaverStatus(context)){
+                cancelIfRunning(context);
                 return; // prevent service starting if power saver on
             }
         }
@@ -66,12 +67,11 @@ public class ServiceManager extends BroadcastReceiver {
         initManagers(context);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
+        Intent serviceIntent = new Intent(context, WifiService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        cancelService(context, pendingIntent); // cancel old timer
+
         if (preferences.getBoolean("enabled", true)){
-            Intent serviceIntent = new Intent(context, WifiService.class);
-            PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            cancelService(context, pendingIntent); // cancel old timer
-
             long millis;
             if (screenStatus){
                 millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval", "10")));
