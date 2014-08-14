@@ -8,7 +8,6 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import com.ikeirnez.autowifiswitch.background.WifiService;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
 
 import java.util.HashMap;
@@ -20,12 +19,10 @@ import java.util.Map;
  */
 public class WifiScanResultsListener extends BroadcastReceiver {
 
-    private WifiService wifiService;
     private WifiManager wifiManager;
     private SharedPreferences preferences;
 
-    public WifiScanResultsListener(WifiService wifiService, WifiManager wifiManager, SharedPreferences preferences){
-        this.wifiService = wifiService;
+    public WifiScanResultsListener(WifiManager wifiManager, SharedPreferences preferences){
         this.wifiManager = wifiManager;
         this.preferences = preferences;
     }

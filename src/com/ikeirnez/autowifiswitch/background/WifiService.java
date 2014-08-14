@@ -32,16 +32,18 @@ public class WifiService extends Service {
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        registerReceiver(wifiScanResultsListener = new WifiScanResultsListener(this, wifiManager, preferences), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        registerReceiver(wifiScanResultsListener = new WifiScanResultsListener(wifiManager, preferences), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
         IntentFilter intentFilter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(screenWifiListener = new ScreenWifiListener(), intentFilter);
+        ServiceManager.serviceRunning = true;
     }
 
     @Override
     public void onDestroy() {
+        ServiceManager.serviceRunning = false;
         unregisterReceiver(wifiScanResultsListener);
         unregisterReceiver(screenWifiListener);
 
@@ -51,7 +53,7 @@ public class WifiService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()){
+        if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnectedOrConnecting()){
             wifiManager.startScan();
         }
 

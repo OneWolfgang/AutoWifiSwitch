@@ -8,9 +8,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
+import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
 import com.ikeirnez.autowifiswitch.R;
-import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 
 /**
@@ -73,14 +73,8 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("enabled") || key.equals("difference_required") || key.equals("update_interval")){
-            ServiceManager.startService(getActivity()); // restart service
-        } else if (key.equals("power_saver_disables")){
-            if (preferences.getBoolean("power_saver_disables", false)){
-                ServiceManager.enablePowerSaverMonitor(getActivity());
-            } else {
-                ServiceManager.disablePowerSaverMonitor(getActivity());
-            }
+        if (key.equals("enabled") || key.equals("update_interval") || key.equals("power_saver_disables")){
+            ServiceManager.updateScanningService(getActivity()); // restart service
         }
     }
 
