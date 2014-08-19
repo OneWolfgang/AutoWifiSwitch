@@ -75,7 +75,10 @@ public class ServiceManager extends BroadcastReceiver {
     }
 
     public static void cancelService(Context context) {
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        cancelService(PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT));
+    }
+
+    public static void cancelService(PendingIntent pendingIntent){
         alarmManager.cancel(pendingIntent);
     }
 
@@ -83,7 +86,7 @@ public class ServiceManager extends BroadcastReceiver {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        alarmManager.cancel(pendingIntent);
+        cancelService(pendingIntent);
 
         if (preferences.getBoolean("enabled", true)) {
             long millis;
