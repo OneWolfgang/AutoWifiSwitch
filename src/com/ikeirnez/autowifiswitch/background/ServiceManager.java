@@ -24,6 +24,7 @@ public class ServiceManager extends BroadcastReceiver {
     private static AlarmManager alarmManager;
     private static PowerManager powerManager;
     private static WifiManager wifiManager;
+    private static Intent serviceIntent;
 
     public static boolean initialized = false;
     public static boolean serviceRunning = false;
@@ -39,11 +40,13 @@ public class ServiceManager extends BroadcastReceiver {
 
     public static void updateScanningService(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Log.i("Service Manager", "Updating service state");
 
         if (!initialized) {
             alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            serviceIntent = new Intent(context, WifiService.class);
 
             SoftwareType softwareType = SoftwareType.getRunningSoftwareType(context);
             if (softwareType != null) {
@@ -72,14 +75,13 @@ public class ServiceManager extends BroadcastReceiver {
     }
 
     public static void cancelService(Context context) {
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, new Intent(context, WifiService.class), PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.cancel(pendingIntent);
     }
 
     public static void modifyScanningInterval(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        Intent serviceIntent = new Intent(context, WifiService.class);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.cancel(pendingIntent);
 
