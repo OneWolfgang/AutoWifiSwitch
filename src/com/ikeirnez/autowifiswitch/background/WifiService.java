@@ -53,7 +53,7 @@ public class WifiService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnectedOrConnecting()){
+        if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()){
             wifiManager.startScan();
         }
 

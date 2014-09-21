@@ -19,7 +19,6 @@ public class PowerSaverListener extends ContentObserver {
     public PowerSaverListener(Context context) {
         super(null);
         this.context = context;
-        Log.wtf("keir", "registered power saver listener");
     }
 
     @SuppressLint("NewApi") // I know this will be fine, trust me
