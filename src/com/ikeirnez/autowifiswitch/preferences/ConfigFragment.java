@@ -74,7 +74,9 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("enabled") || key.equals("update_interval") || key.equals("power_saver_disables")){
-            ServiceManager.updateScanningService(getActivity()); // restart service
+            if (isAdded()){ // avoid NPE on getActivity
+                ServiceManager.updateScanningService(getActivity()); // restart service
+            }
         }
     }
 
