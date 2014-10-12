@@ -84,6 +84,10 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals("donate_button")){
             new AlertDialog.Builder(getActivity())
+                    .setTitle("Donations Unavailable")
+                    .setMessage("PayPal have terminated my account for now, will update this when my account is active again")
+                    .create().show();
+            /*new AlertDialog.Builder(getActivity()) todo
                     .setTitle(R.string.donate_popup_header)
                     .setMessage(R.string.donate_popup_text)
                     .setCancelable(true).setNegativeButton(R.string.donate_popup_negative, null)
@@ -92,7 +96,7 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
                         public void onClick(DialogInterface dialog, int which) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_popup_url))));
                         }
-                    }).create().show();
+                    }).create().show();*/
         }
 
         return true;

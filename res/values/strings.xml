@@ -21,7 +21,7 @@
     <string name="power_saver_description">Disables the wifi scanning service whilst in power saver mode</string>
     <string name="power_saver_android_version">Requires Android Jelly Bean (v4.1) or higher</string>
     <string name="power_saver_not_supported">Power Saver support not added for your device, we currently only support HTC and Samsung devices.</string>
-    <string name="donate">Donate</string>
+    <string name="donate">Donate (currently unavailable)</string> <!-- todo -->
     <string name="donate_summary">This application is completely free, however donations are always welcomed. It supports future projects and updates to this app</string>
     <string name="donate_popup_header">Thanks!</string>
     <string name="donate_popup_text">Thanks for considering to make a donation, all donations are GREATLY appreciated and go a long way. Donations will help support the development of this app and new apps to come. :)</string>
