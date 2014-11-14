@@ -1,13 +1,13 @@
 package com.ikeirnez.autowifiswitch.preferences;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.*;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.Toast;
 import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
 import com.ikeirnez.autowifiswitch.R;
@@ -16,7 +16,7 @@ import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 /**
  * Created by iKeirNez on 27/07/2014.
  */
-public class ConfigFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
+public class ConfigFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     // preferences stuff
     private final String[] DIFFERENCE_ENTRIES = new String[10];
@@ -42,6 +42,21 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
         addPreferencesFromResource(R.xml.preferences);
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
 
+        // previous versions had a bug whereby some numeric values could be set to "" causing crashes, this corrects that
+        // todo remove in future version
+        for (String preference : new String[]{"update_interval", "update_interval_display_off"}){
+            EditTextPreference editTextPreference = (EditTextPreference) findPreference(preference);
+
+            if (editTextPreference.getText().equals("")){
+                int resId = getResources().getIdentifier("default_" + preference, "integer", getActivity().getPackageName()); // work out resource name programmatically
+                editTextPreference.setText(String.valueOf(getResources().getInteger(resId)));
+            }
+        }
+
+        if (!ServiceManager.serviceRunning){ // start scanning service if not already started
+            ServiceManager.updateScanningService(getActivity());
+        }
+
         ListPreference differenceRequired = (ListPreference) findPreference("difference_required");
         differenceRequired.setEntries(DIFFERENCE_ENTRIES);
         differenceRequired.setEntryValues(DIFFERENCE_ENTRIES);
@@ -66,6 +81,11 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
             powerSaverDisables.setEnabled(false);
             powerSaverDisables.setSummary(R.string.power_saver_not_supported);
         }
+
+        EditTextPreference updateIntervalScreenOn = (EditTextPreference) findPreference("update_interval");
+        EditTextPreference updateIntervalScreenOff = (EditTextPreference) findPreference("update_interval_display_off");
+        updateIntervalScreenOn.setOnPreferenceChangeListener(this);
+        updateIntervalScreenOff.setOnPreferenceChangeListener(this);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         preferences.registerOnSharedPreferenceChangeListener(this);
@@ -97,6 +117,22 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_popup_url))));
                         }
                     }).create().show();*/
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        // this prevents empty strings ("") from being entered in a number input box
+        if (preference instanceof EditTextPreference){
+            EditTextPreference editTextPreference = (EditTextPreference) preference;
+            EditText editText = editTextPreference.getEditText();
+
+            if ((editText.getInputType() & InputType.TYPE_CLASS_NUMBER) > 0 && newValue.equals("")){
+                Toast.makeText(getActivity(), R.string.input_number_empty, Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
 
         return true;

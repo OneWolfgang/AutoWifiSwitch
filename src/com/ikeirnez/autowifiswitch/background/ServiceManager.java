@@ -11,6 +11,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+import com.ikeirnez.autowifiswitch.R;
 import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 import com.ikeirnez.autowifiswitch.listeners.PowerSaverListener;
 
@@ -33,6 +34,8 @@ public class ServiceManager extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+
         if (!serviceRunning) {
             updateScanningService(context);
         }
@@ -91,10 +94,10 @@ public class ServiceManager extends BroadcastReceiver {
         if (preferences.getBoolean("enabled", true)) {
             long millis;
             if (powerManager.isScreenOn()) {
-                millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval", "10")));
+                millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval", null)));
                 Log.i("Service Manager", "Scanning every " + millis + "ms (screen on)");
             } else {
-                millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval_display_off", "30")));
+                millis = TimeUnit.SECONDS.toMillis(Integer.parseInt(preferences.getString("update_interval_display_off", null)));
 
                 if (millis == 0) {
                     Log.i("Service Manager", "Disabling scanning service for now (screen off)");

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="enabled">true</bool>
+    <integer name="default_difference_required">2</integer>
+    <integer name="default_update_interval">10</integer>
+    <integer name="default_update_interval_screen_off">30</integer>
+    <string name="default_notification_type">TOAST</string>
+    <bool name="default_power_saver_disables">true</bool>
+</resources>

@@ -12,6 +12,7 @@
     <string name="update_interval_display_on_summary">The time (in seconds) which we should scan for new networks to connect to when the display is on</string>
     <string name="update_interval_display_off">Scan Interval (display off)</string>
     <string name="update_interval_display_off_summary">The time (in seconds) which we should scan for new networks to connect to when the display is off (0 disables scanning whilst display is off)</string>
+    <string name="input_number_empty">Please enter a valid number</string>
     <string name="notification_type">Notification Type</string>
     <string name="notification_type_summary">The type of notification to receive when this app connects you to the best nearby network</string>
     <string name="notification_type_none">None</string>

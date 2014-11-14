@@ -12,10 +12,6 @@ public class Main extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        if (!ServiceManager.serviceRunning){
-            ServiceManager.updateScanningService(this);
-        }
-
         // the below code opens the option fragment
         // this can be removed if we ever add more menus
         getFragmentManager().beginTransaction().replace(android.R.id.content, new ConfigFragment()).commit();
