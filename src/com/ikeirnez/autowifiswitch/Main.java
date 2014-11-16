@@ -2,7 +2,6 @@ package com.ikeirnez.autowifiswitch;
 
 import android.os.Bundle;
 import android.preference.*;
-import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.preferences.ConfigFragment;
 
 public class Main extends PreferenceActivity {

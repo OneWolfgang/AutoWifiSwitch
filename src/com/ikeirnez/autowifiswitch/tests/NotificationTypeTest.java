@@ -1,8 +1,6 @@
 package com.ikeirnez.autowifiswitch.tests;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ActivityTestCase;
-import android.test.ActivityUnitTestCase;
 import com.ikeirnez.autowifiswitch.Main;
 import com.ikeirnez.autowifiswitch.R;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
@@ -14,11 +12,6 @@ public class NotificationTypeTest extends ActivityInstrumentationTestCase2<Main>
 
     public NotificationTypeTest() {
         super(Main.class);
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
     }
 
     // Check's that the default notification type (defined manually in an xml file) actually exists
