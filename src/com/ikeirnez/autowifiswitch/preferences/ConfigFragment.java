@@ -19,9 +19,9 @@ import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 public class ConfigFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     // preferences stuff
-    private final String[] DIFFERENCE_ENTRIES = new String[10];
-    private final int NOTIFICATION_TYPE_AMOUNT = NotificationType.values().length;
-    private final String[] NOTIFICATION_ENTRIES = new String[NOTIFICATION_TYPE_AMOUNT], NOTIFICATION_ENTRY_VALUES = new String[NOTIFICATION_TYPE_AMOUNT];
+    public final String[] DIFFERENCE_ENTRIES = new String[10];
+    public final int NOTIFICATION_TYPE_AMOUNT = NotificationType.values().length;
+    public final String[] NOTIFICATION_ENTRIES = new String[NOTIFICATION_TYPE_AMOUNT], NOTIFICATION_ENTRY_VALUES = new String[NOTIFICATION_TYPE_AMOUNT];
 
     private SharedPreferences preferences;
 

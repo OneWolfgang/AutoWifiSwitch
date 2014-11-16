@@ -22,7 +22,7 @@
     <ListPreference android:key="notification_type"
                     android:title="@string/notification_type"
                     android:summary="@string/notification_type_summary"
-                    android:defaultValue="@string/default_notification_type" /> <!-- todo test for this -->
+                    android:defaultValue="@string/default_notification_type" />
     <CheckBoxPreference android:key="power_saver_disables"
                       android:title="@string/power_saver"
                       android:summary="@string/power_saver_description"
