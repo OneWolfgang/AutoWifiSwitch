@@ -8,9 +8,14 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import com.ikeirnez.autowifiswitch.listeners.ScreenWifiListener;
+import android.provider.Settings;
+import com.ikeirnez.autowifiswitch.enums.SoftwareType;
+import com.ikeirnez.autowifiswitch.listeners.EventListener;
+import com.ikeirnez.autowifiswitch.listeners.LegacyPowerSaverListener;
 import com.ikeirnez.autowifiswitch.listeners.WifiScanResultsListener;
 
 /**
@@ -23,7 +28,7 @@ public class WifiService extends Service {
     private ConnectivityManager connectivityManager;
 
     private WifiScanResultsListener wifiScanResultsListener;
-    private ScreenWifiListener screenWifiListener;
+    private EventListener eventListener;
 
     @Override
     public void onCreate() {
@@ -37,7 +42,17 @@ public class WifiService extends Service {
         IntentFilter intentFilter = new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         intentFilter.addAction(Intent.ACTION_SCREEN_ON);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(screenWifiListener = new ScreenWifiListener(), intentFilter);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){ // power saver api only available in Lollipop and above
+            intentFilter.addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED);
+        } else { // if below version Lollipop, use legacy power saver detection
+            SoftwareType softwareType = SoftwareType.getRunningSoftwareType(this);
+            if (softwareType != null) {
+                getContentResolver().registerContentObserver(Settings.System.CONTENT_URI, true, new LegacyPowerSaverListener(this));
+            }
+        }
+
+        registerReceiver(eventListener = new EventListener(), intentFilter);
         ServiceManager.serviceRunning = true;
     }
 
@@ -45,7 +60,7 @@ public class WifiService extends Service {
     public void onDestroy() {
         ServiceManager.serviceRunning = false;
         unregisterReceiver(wifiScanResultsListener);
-        unregisterReceiver(screenWifiListener);
+        unregisterReceiver(eventListener);
 
         super.onDestroy();
     }

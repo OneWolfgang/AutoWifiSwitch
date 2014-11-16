@@ -70,16 +70,18 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
         Preference donateButton = findPreference("donate_button");
         donateButton.setOnPreferenceClickListener(this);
 
-        CheckBoxPreference powerSaverDisables = (CheckBoxPreference) findPreference("power_saver_disables");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){ // this only applies for versions < LOLLIPOP
+            CheckBoxPreference powerSaverDisables = (CheckBoxPreference) findPreference("power_saver_disables");
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
-            powerSaverDisables.setChecked(false);
-            powerSaverDisables.setEnabled(false);
-            powerSaverDisables.setSummary(R.string.power_saver_android_version);
-        } else if (SoftwareType.getRunningSoftwareType(getActivity()) == null){
-            powerSaverDisables.setChecked(false);
-            powerSaverDisables.setEnabled(false);
-            powerSaverDisables.setSummary(R.string.power_saver_not_supported);
+            if (SoftwareType.getRunningSoftwareType(getActivity()) == null){
+                powerSaverDisables.setChecked(false);
+                powerSaverDisables.setEnabled(false);
+                powerSaverDisables.setSummary(R.string.power_saver_not_supported);
+            } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
+                powerSaverDisables.setChecked(false);
+                powerSaverDisables.setEnabled(false);
+                powerSaverDisables.setSummary(R.string.power_saver_android_version);
+            }
         }
 
         EditTextPreference updateIntervalScreenOn = (EditTextPreference) findPreference("update_interval");

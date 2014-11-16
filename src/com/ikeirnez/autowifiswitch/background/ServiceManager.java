@@ -1,19 +1,16 @@
 package com.ikeirnez.autowifiswitch.background;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.Log;
 import com.ikeirnez.autowifiswitch.R;
 import com.ikeirnez.autowifiswitch.enums.SoftwareType;
-import com.ikeirnez.autowifiswitch.listeners.PowerSaverListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,8 +27,6 @@ public class ServiceManager extends BroadcastReceiver {
     public static boolean initialized = false;
     public static boolean serviceRunning = false;
 
-    private static PowerSaverListener powerSaverListener;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
@@ -41,6 +36,7 @@ public class ServiceManager extends BroadcastReceiver {
         }
     }
 
+    @SuppressLint("NewApi") // power saving apis giving lint errors
     public static void updateScanningService(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Log.i("Service Manager", "Updating service state");
@@ -50,12 +46,6 @@ public class ServiceManager extends BroadcastReceiver {
             powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             serviceIntent = new Intent(context, WifiService.class);
-
-            SoftwareType softwareType = SoftwareType.getRunningSoftwareType(context);
-            if (softwareType != null) {
-                context.getContentResolver().registerContentObserver(Settings.System.CONTENT_URI, true, powerSaverListener = new PowerSaverListener(context));
-            }
-
             initialized = true;
         }
 
@@ -68,8 +58,18 @@ public class ServiceManager extends BroadcastReceiver {
             return; // don't continue
         }
 
-        SoftwareType softwareType = SoftwareType.getRunningSoftwareType(context);
-        if (softwareType != null && softwareType.getPowerSaverStatus(context)) {
+        boolean powerSaverStatus = false;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            powerSaverStatus = powerManager.isPowerSaveMode();
+        } else { // legacy power saver detection
+            SoftwareType softwareType = SoftwareType.getRunningSoftwareType(context);
+            if (softwareType != null) {
+                powerSaverStatus = softwareType.getPowerSaverStatus(context);
+            }
+        }
+
+        if (powerSaverStatus){
             Log.i("Service Manager", "Service not started, power saver mode active");
             return; // don't continue initializing if in power saver
         }

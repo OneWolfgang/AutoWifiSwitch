@@ -12,11 +12,11 @@ import com.ikeirnez.autowifiswitch.enums.SoftwareType;
 /**
  * Created by iKeirNez on 02/08/2014.
  */
-public class PowerSaverListener extends ContentObserver {
+public class LegacyPowerSaverListener extends ContentObserver {
 
     private Context context;
 
-    public PowerSaverListener(Context context) {
+    public LegacyPowerSaverListener(Context context) {
         super(null);
         this.context = context;
     }
