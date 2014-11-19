@@ -1,6 +1,6 @@
 package com.ikeirnez.autowifiswitch.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by iKeirNez on 19/11/2014.

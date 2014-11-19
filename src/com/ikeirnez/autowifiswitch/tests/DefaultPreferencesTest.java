@@ -26,7 +26,7 @@ public class DefaultPreferencesTest extends ActivityInstrumentationTestCase2<Mai
     // Check the difference required integer is actually contained in the DIFFERENCE_REQUIRED array
     public void testDifferenceRequired() throws Exception {
         int defaultDifferenceRequired = getActivity().getResources().getInteger(R.integer.default_difference_required);
-        SettingsFragment settingsFragment = (SettingsFragment) getActivity().getFragmentManager().findFragmentById(android.R.id.content);
+        SettingsFragment settingsFragment = (SettingsFragment) getActivity().getSupportFragmentManager().findFragmentById(android.R.id.content);
         assertTrue("DIFFERENCE_ENTRIES does not contain the default value \"" + defaultDifferenceRequired + "\"", Arrays.asList(settingsFragment.DIFFERENCE_ENTRIES).contains(String.valueOf(defaultDifferenceRequired)));
     }
 }

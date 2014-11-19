@@ -12,11 +12,12 @@ import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
 import com.ikeirnez.autowifiswitch.R;
 import com.ikeirnez.autowifiswitch.legacy.LegacySoftwareType;
+import com.ikeirnez.autowifiswitch.support.SupportPreferenceFragment;
 
 /**
  * Created by iKeirNez on 27/07/2014.
  */
-public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
+public class SettingsFragment extends SupportPreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     // preferences stuff
     public final String[] DIFFERENCE_ENTRIES = new String[10];
