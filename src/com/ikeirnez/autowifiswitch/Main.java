@@ -1,18 +1,18 @@
 package com.ikeirnez.autowifiswitch;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.preference.*;
-import com.ikeirnez.autowifiswitch.preferences.ConfigFragment;
+import com.ikeirnez.autowifiswitch.fragments.MainMenuFragment;
 
-public class Main extends PreferenceActivity {
+/**
+ * Main activity, responsible for swapping in the MainMenuFragment
+ */
+public class Main extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // the below code opens the option fragment
-        // this can be removed if we ever add more menus
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new ConfigFragment()).commit();
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new MainMenuFragment()).commit();
     }
 
 }

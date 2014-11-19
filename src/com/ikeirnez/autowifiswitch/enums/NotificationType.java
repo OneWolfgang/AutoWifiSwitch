@@ -10,7 +10,7 @@ import com.ikeirnez.autowifiswitch.R;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by iKeirNez on 26/07/2014.
+ * Handles various methods of notifying players to a switch of network
  */
 public enum NotificationType {
 

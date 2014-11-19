@@ -13,9 +13,9 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import com.ikeirnez.autowifiswitch.enums.SoftwareType;
+import com.ikeirnez.autowifiswitch.legacy.LegacySoftwareType;
 import com.ikeirnez.autowifiswitch.listeners.EventListener;
-import com.ikeirnez.autowifiswitch.listeners.LegacyPowerSaverListener;
+import com.ikeirnez.autowifiswitch.legacy.LegacyPowerSaverListener;
 import com.ikeirnez.autowifiswitch.listeners.WifiScanResultsListener;
 
 /**
@@ -46,7 +46,7 @@ public class WifiService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){ // power saver api only available in Lollipop and above
             intentFilter.addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED);
         } else { // if below version Lollipop, use legacy power saver detection
-            SoftwareType softwareType = SoftwareType.getRunningSoftwareType(this);
+            LegacySoftwareType softwareType = LegacySoftwareType.getRunningSoftwareType(this);
             if (softwareType != null) {
                 getContentResolver().registerContentObserver(Settings.System.CONTENT_URI, true, new LegacyPowerSaverListener(this));
             }

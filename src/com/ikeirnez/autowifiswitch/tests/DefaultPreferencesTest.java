@@ -4,7 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.ikeirnez.autowifiswitch.Main;
 import com.ikeirnez.autowifiswitch.R;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
-import com.ikeirnez.autowifiswitch.preferences.ConfigFragment;
+import com.ikeirnez.autowifiswitch.fragments.SettingsFragment;
 
 import java.util.Arrays;
 
@@ -26,7 +26,7 @@ public class DefaultPreferencesTest extends ActivityInstrumentationTestCase2<Mai
     // Check the difference required integer is actually contained in the DIFFERENCE_REQUIRED array
     public void testDifferenceRequired() throws Exception {
         int defaultDifferenceRequired = getActivity().getResources().getInteger(R.integer.default_difference_required);
-        ConfigFragment configFragment = (ConfigFragment) getActivity().getFragmentManager().findFragmentById(android.R.id.content);
-        assertTrue("DIFFERENCE_ENTRIES does not contain the default value \"" + defaultDifferenceRequired + "\"", Arrays.asList(configFragment.DIFFERENCE_ENTRIES).contains(String.valueOf(defaultDifferenceRequired)));
+        SettingsFragment settingsFragment = (SettingsFragment) getActivity().getFragmentManager().findFragmentById(android.R.id.content);
+        assertTrue("DIFFERENCE_ENTRIES does not contain the default value \"" + defaultDifferenceRequired + "\"", Arrays.asList(settingsFragment.DIFFERENCE_ENTRIES).contains(String.valueOf(defaultDifferenceRequired)));
     }
 }

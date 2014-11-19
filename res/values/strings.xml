@@ -3,7 +3,7 @@
     <string name="app_name">AutoWifiSwitch</string>
     <string name="connected_notification">AutoWifiSwitch: Connected to %1$s</string>
 
-    <!-- Preferences Screen -->
+    <!-- Preferences Tab -->
     <string name="enabled">Enabled</string>
     <string name="enabled_summary">Enable or disable automatic wifi scanning and joining</string>
     <string name="required_difference">Required Difference</string>

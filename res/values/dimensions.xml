@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_menu_item_padding_lr">16dp</dimen> <!-- left/right -->
+    <dimen name="main_menu_item_padding_tb">8dp</dimen> <!-- top/bottom -->
+    <dimen name="main_menu_item_text_padding_lr">8dp</dimen>
+</resources>

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by iKeirNez on 25/07/2014.
+ * Receives wifi network data after scan and is responsible for connecting to a stronger network (if there is one)
  */
 public class WifiScanResultsListener extends BroadcastReceiver {
 

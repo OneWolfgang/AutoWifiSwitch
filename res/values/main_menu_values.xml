@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Preferences</string>
+    <string name="settings_summary">Some summary for Preferences</string>
+
+    <string name="zones_title">Zones</string>
+    <string name="zones_summary">Some summary for Zones</string>
+</resources>

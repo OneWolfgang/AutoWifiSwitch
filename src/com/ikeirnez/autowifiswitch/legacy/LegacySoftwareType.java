@@ -1,4 +1,4 @@
-package com.ikeirnez.autowifiswitch.enums;
+package com.ikeirnez.autowifiswitch.legacy;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,9 @@ import android.net.Uri;
 import android.provider.Settings;
 
 /**
- * Created by iKeirNez on 02/08/2014.
+ * Handles detection of brand (ie Sense/TouchWiz) and various power saver functions for API levels < 21
  */
-public enum SoftwareType {
+public enum LegacySoftwareType {
 
     SENSE("com.htc.launcher.Launcher", "user_powersaver_enable"),
     TOUCHWIZ("com.sec.android.app.easylauncher.Launcher", "psm_switch");
@@ -22,7 +22,7 @@ public enum SoftwareType {
 
     private Boolean running;
 
-    private SoftwareType(String uiLauncherName, String powerSaverKey){
+    private LegacySoftwareType(String uiLauncherName, String powerSaverKey){
         this.uiLauncherName = uiLauncherName;
         this.powerSaverKey = powerSaverKey;
         this.powerSaverUri = Settings.System.CONTENT_URI.buildUpon().appendPath(powerSaverKey).build();
@@ -61,12 +61,12 @@ public enum SoftwareType {
         return running;
     }
 
-    private static SoftwareType runningSoftwareType = null;
+    private static LegacySoftwareType runningSoftwareType = null;
     private static boolean cachedRunningSoftwareType = false;
 
-    public static SoftwareType getRunningSoftwareType(Context context){
+    public static LegacySoftwareType getRunningSoftwareType(Context context){
         if (!cachedRunningSoftwareType){
-            for (SoftwareType softwareType : values()){
+            for (LegacySoftwareType softwareType : values()){
                 if (softwareType.isRunning(context)){
                     runningSoftwareType = softwareType;
                     break;

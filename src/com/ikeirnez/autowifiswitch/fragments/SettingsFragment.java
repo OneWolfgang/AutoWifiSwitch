@@ -1,4 +1,4 @@
-package com.ikeirnez.autowifiswitch.preferences;
+package com.ikeirnez.autowifiswitch.fragments;
 
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
@@ -11,12 +11,12 @@ import android.widget.Toast;
 import com.ikeirnez.autowifiswitch.background.ServiceManager;
 import com.ikeirnez.autowifiswitch.enums.NotificationType;
 import com.ikeirnez.autowifiswitch.R;
-import com.ikeirnez.autowifiswitch.enums.SoftwareType;
+import com.ikeirnez.autowifiswitch.legacy.LegacySoftwareType;
 
 /**
  * Created by iKeirNez on 27/07/2014.
  */
-public class ConfigFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
     // preferences stuff
     public final String[] DIFFERENCE_ENTRIES = new String[10];
@@ -73,7 +73,7 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){ // this only applies for versions < LOLLIPOP
             CheckBoxPreference powerSaverDisables = (CheckBoxPreference) findPreference("power_saver_disables");
 
-            if (SoftwareType.getRunningSoftwareType(getActivity()) == null){
+            if (LegacySoftwareType.getRunningSoftwareType(getActivity()) == null){
                 powerSaverDisables.setChecked(false);
                 powerSaverDisables.setEnabled(false);
                 powerSaverDisables.setSummary(R.string.power_saver_not_supported);
@@ -91,6 +91,7 @@ public class ConfigFragment extends PreferenceFragment implements SharedPreferen
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         preferences.registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override

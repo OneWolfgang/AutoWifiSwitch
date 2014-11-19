@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.ikeirnez.autowifiswitch"
           android:versionCode="8"
-          android:versionName="1.33">
+          android:versionName="2.0"> <!-- todo on release update versionCode -->
     <uses-sdk android:targetSdkVersion="21" android:minSdkVersion="14"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />

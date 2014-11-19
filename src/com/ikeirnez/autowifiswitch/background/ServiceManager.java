@@ -10,7 +10,7 @@ import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.ikeirnez.autowifiswitch.R;
-import com.ikeirnez.autowifiswitch.enums.SoftwareType;
+import com.ikeirnez.autowifiswitch.legacy.LegacySoftwareType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -63,7 +63,7 @@ public class ServiceManager extends BroadcastReceiver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             powerSaverStatus = powerManager.isPowerSaveMode();
         } else { // legacy power saver detection
-            SoftwareType softwareType = SoftwareType.getRunningSoftwareType(context);
+            LegacySoftwareType softwareType = LegacySoftwareType.getRunningSoftwareType(context);
             if (softwareType != null) {
                 powerSaverStatus = softwareType.getPowerSaverStatus(context);
             }
