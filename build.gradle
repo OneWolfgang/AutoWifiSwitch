@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.0'
+        classpath 'com.android.tools.build:gradle:0.14.2'
     }
 }
 
@@ -16,7 +16,7 @@ dependencies {
 
 android {
     compileSdkVersion 21 // keep this updated
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
