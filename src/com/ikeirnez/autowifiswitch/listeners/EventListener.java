@@ -14,6 +14,6 @@ public class EventListener extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.i("Event Listener", "Detected change, refreshing service accordingly");
-        ServiceManager.updateScanningService(context);
+        ServiceManager.updateScanningService(context); // todo
     }
 }

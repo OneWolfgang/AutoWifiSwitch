@@ -52,13 +52,16 @@ public class WifiScanResultsListener extends BroadcastReceiver {
             if (best != null){
                 if (current != null){
                     String currentSSID = current.getSSID();
-                    currentSSID = currentSSID.length() >= 2 ? currentSSID.substring(1, currentSSID.length() - 1) : currentSSID; // remove "s
 
-                    // don't connect to a network we're already connected to
-                    // only connect if the new network's strength meets the difference requirement
-                    if (!best.SSID.equals(currentSSID) && WifiManager.compareSignalLevel(best.level, current.getRssi()) >= differenceRequirement){
-                        wifiManager.enableNetwork(allowedAttemptConnect.get(best.SSID).networkId, true);
-                        NotificationType.valueOf(preferences.getString("notification_type", NotificationType.TOAST.name())).doNotification(context, best.SSID);
+                    if (currentSSID != null){ // ssid is null on some devices
+                        currentSSID = currentSSID.length() >= 2 ? currentSSID.substring(1, currentSSID.length() - 1) : currentSSID; // remove "s
+
+                        // don't connect to a network we're already connected to
+                        // only connect if the new network's strength meets the difference requirement
+                        if (!best.SSID.equals(currentSSID) && WifiManager.compareSignalLevel(best.level, current.getRssi()) >= differenceRequirement){
+                            wifiManager.enableNetwork(allowedAttemptConnect.get(best.SSID).networkId, true);
+                            NotificationType.valueOf(preferences.getString("notification_type", NotificationType.TOAST.name())).doNotification(context, best.SSID);
+                        }
                     }
                 }
             }

@@ -13,9 +13,9 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import com.ikeirnez.autowifiswitch.legacy.LegacyPowerSaverListener;
 import com.ikeirnez.autowifiswitch.legacy.LegacySoftwareType;
 import com.ikeirnez.autowifiswitch.listeners.EventListener;
-import com.ikeirnez.autowifiswitch.legacy.LegacyPowerSaverListener;
 import com.ikeirnez.autowifiswitch.listeners.WifiScanResultsListener;
 
 /**

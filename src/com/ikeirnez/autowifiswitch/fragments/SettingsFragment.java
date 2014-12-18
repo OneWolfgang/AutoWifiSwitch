@@ -41,22 +41,6 @@ public class SettingsFragment extends SupportPreferenceFragment implements Share
         }
 
         addPreferencesFromResource(R.xml.preferences);
-        PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
-
-        // previous versions had a bug whereby some numeric values could be set to "" causing crashes, this corrects that
-        // todo remove in future version
-        for (String preference : new String[]{"update_interval", "update_interval_display_off"}){
-            EditTextPreference editTextPreference = (EditTextPreference) findPreference(preference);
-
-            if (editTextPreference.getText().equals("")){
-                int resId = getResources().getIdentifier("default_" + preference, "integer", getActivity().getPackageName()); // work out resource name programmatically
-                editTextPreference.setText(String.valueOf(getResources().getInteger(resId)));
-            }
-        }
-
-        if (!ServiceManager.serviceRunning){ // start scanning service if not already started
-            ServiceManager.updateScanningService(getActivity());
-        }
 
         ListPreference differenceRequired = (ListPreference) findPreference("difference_required");
         differenceRequired.setEntries(DIFFERENCE_ENTRIES);
@@ -92,7 +76,6 @@ public class SettingsFragment extends SupportPreferenceFragment implements Share
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         preferences.registerOnSharedPreferenceChangeListener(this);
-
     }
 
     @Override
